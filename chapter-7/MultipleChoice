@@ -1,0 +1,27 @@
+1. A polymorphic function
+
+  d) may resolve to values of different types, depending on inputs
+
+2. Two functions named f and g have types:
+   f :: Char -> String
+   g :: String :: [String]
+   The composed function g . f has the type:
+
+  b) Char -> [String]
+ 
+3. A function f has the type:
+   f :: Ord a => a -> a -> Bool
+   When we apply f to one numeric value, what is the type now?
+
+  d) (Ord a, Num a) => a -> Bool
+
+4. a function with type (a -> b) -> c
+
+  b) is a higher order function
+
+5. Given the following definition of f:
+   f :: a -> a
+   f x = x
+   What is the type of f True
+
+  a) f True :: Bool
