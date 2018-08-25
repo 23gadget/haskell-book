@@ -1,0 +1,56 @@
+1. foldr (*) 1 [1..5]
+== foldl (flip (*)) 1 [1..5]
+   foldl (*) 1 [1..5]
+
+2. foldl (flip (*)) 1 [1..5]
+f = (flip (*))
+
+foldl f 1 [1..5]
+foldl f (f 1 1) [2..5]
+foldl f (f (f 1 1) 2) [3..5]
+foldl f (f (f (f 1 1) 2) 3) [4..5]
+foldl f (f (f (f (f 1 1) 2) 3) 4) [5]
+foldl f (f (f (f (f (f 1 1) 2) 3) 4) 5) []
+
+(f (f (f (f (f 1 1) 2) 3) 4) 5)
+==
+(((((1 `f` 1) `f` 2) `f` 3) `f` 4) `f` 5)
+
+3. One differenve between foldr and foldl is: foldr, but not foldl, associatives to the right
+
+4. Folds are catamorphisms, which means they are generally used to reduce structure
+
+5.
+a) foldr (++) ["woot", "WOOT", "woot"]
+ fix: foldr (++) "" ["woot", "WOOT", "woot"]
+
+b) foldr max [] "fear is the little death"
+ fix : foldr max ' ' "fear is the little death"
+ 
+c) foldr and True [False, True]
+ fix : foldr (&&) True [False, True]
+
+d) foldr (||) True [False, True]
+ fix : foldr (||) False [False, True]
+
+e) foldl ((++) . show) "" [1..5]
+ fix : foldl (flip ((++) . show)) "" [1..5]
+
+ why? ((++) . show) ::  Show a -> [Char] -> [Char]
+   without flipping we are attempting ((++) . show) "" 1
+   which is wrong.
+
+    flip ((++) . show) :: [Char] -> Show a -> [Char]
+    which works.
+
+f) foldr const 'a' [1..5]
+ fix : foldr (flip const) 'a' [1..5]
+
+g) foldr const 0 "tacos"
+ fix : foldr (flip const) 0 "tacos"
+
+h) foldl (flip const) 0 "burritos"
+ fix : foldl const 0 "burritos"
+
+i) foldl (flip const) 'z' [1..5]
+ fix : foldl const 'z' [1..5]
